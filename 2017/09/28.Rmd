@@ -262,3 +262,8 @@ atcg_permutations
 This was a really fun activity and I'm thinking it might be fun to come up with fun problems like this at the end of each Meetup. I am starting yet another spreadsheet to collect questions (you can post a link to an R notebook or Gist with R code if need be) which we can randomly choose from.
 
 https://docs.google.com/spreadsheets/d/19HU-icl6P0rAObs8G_BX5BDQ5_5cPjzj8Fek6V3ZA4E/edit?usp=sharing
+
+# Notebook Source
+
+https://github.com/rladies-pdx/meeting_recaps/blob/master/2017/09/28.Rmd
+
