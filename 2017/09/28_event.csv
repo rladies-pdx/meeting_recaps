@@ -1,0 +1,32 @@
+created,duration,id,name,status,time,updated,utc_offset,waitlist_count,yes_rsvp_count,link,description,how_to_find_us,visibility,plain_text_description,event_hosts.id1,event_hosts.id2,event_hosts.name1,event_hosts.name2,event_hosts.intro1,event_hosts.intro2,event_hosts.photo.id1,event_hosts.photo.id2,event_hosts.photo.highres_link1,event_hosts.photo.highres_link2,event_hosts.photo.photo_link1,event_hosts.photo.photo_link2,event_hosts.photo.thumb_link1,event_hosts.photo.thumb_link2,event_hosts.photo.type1,event_hosts.photo.type2,event_hosts.photo.base_url1,event_hosts.photo.base_url2,venue.id,venue.name,venue.lat,venue.lon,venue.repinned,venue.address_1,venue.city,venue.country,venue.localized_country_name,venue.zip,venue.state,group.created,group.name,group.id,group.join_mode,group.lat,group.lon,group.urlname,group.who,group.localized_location,group.region
+1505425037e3,5400000,243372843,R-Ladies PDX First Meetup,past,15066486e5,1506719346e3,-25200000,0,10,https://www.meetup.com/R-Ladies-PDX/events/243372843/,"<p>We're finally kicking off our first R-Ladies PDX Meetup!</p> <p>Apologies for the short notice on this but rest assured there will be more meetups in the near future if you can't make this one. The goal of this Meetup is really just to start the momentum and get the group going!</p> <p>Our meeting space is a conference room located in the WeWork office that has restricted public access. We have the space reserved starting at 6pm, so feel free to come a little early! </p> <p>UPDATE: We will have food: Tacos from Uno Mas (<a href=""http://unomastaquiza.com/"" class=""linkified"">http://unomastaquiza.com/</a> - vegetarian + GF options) and non-alcoholic beverages!</p> <p>Here is the suggested agenda, times may shift depending on how many folks show up and what people are interested in sharing.</p> <p><b>6:30 - Introductions</b></p> <p>•  What is R-Ladies?</p> <p>• What would we all like to get out of R-Ladies PDX? </p> <p>• Any other R-Ladies items folks want to discuss, feel free to add to the doc (<a href=""https://docs.google.com/spreadsheets/d/1fIYHe1zEoXuu7dupvh2NNqdpUJU-Ls6IQQc9DZRbcWU/edit?usp=sharing"">R-Ladies Agenda Items</a>) or contact Augustina or Deeksha.</p> <p>You can also use comments in this event for your suggestions. If we run short of time, we can continue the discussion online and at a future meetup! </p> <p><b>7:00 - Lightning talks</b></p> <p>Around 5-10 minutes each - topic: ""Something I currently do or want to do with R""</p> <p>This is a very informal opportunity for anyone who wants to share something they are excited about or just wants to get more comfortable talking in front of others in a friendly space. You don't have to have slides or anything fancy! Sign up here (<a href=""https://docs.google.com/spreadsheets/d/1QlkvslwBA0HQCgv6rcsLCRQUChzNhU7EiUqUCKlxrfU/edit?usp=sharing"">Lightning Talks Sign Up</a>) or message Augustina or Deeksha!</p> <p><b> 7:30 - Wrap up!</b> </p> <p>Many thanks to Chester Ismay and WeWork for hosting our first Meetup!</p> <p><br/>Also thanks to IBM for sponsoring the food!</p> ","Someone will be at the WeWork gate to let people in. If no one is there, message through Meeting or text Augustina at (347) 871-7375.",public,"We're finally kicking off our first R-Ladies PDX Meetup!
+
+Apologies for the short notice on this but rest assured there will be more meetups in the near future if you can't make this one. The goal of this Meetup is really just to start the momentum and get the group going!
+
+Our meeting space is a conference room located in the WeWork office that has restricted public access. We have the space reserved starting at 6pm, so feel free to come a little early!
+
+UPDATE: We will have food: Tacos from Uno Mas (http://unomastaquiza.com/ - vegetarian + GF options) and non-alcoholic beverages!
+
+Here is the suggested agenda, times may shift depending on how many folks show up and what people are interested in sharing.
+
+6:30 - Introductions
+
+• What is R-Ladies?
+
+• What would we all like to get out of R-Ladies PDX?
+
+• Any other R-Ladies items folks want to discuss, feel free to add to the doc (R-Ladies Agenda Items (https://docs.google.com/spreadsheets/d/1fIYHe1zEoXuu7dupvh2NNqdpUJU-Ls6IQQc9DZRbcWU/edit?usp=sharing)) or contact Augustina or Deeksha.
+
+You can also use comments in this event for your suggestions. If we run short of time, we can continue the discussion online and at a future meetup!
+
+7:00 - Lightning talks
+
+Around 5-10 minutes each - topic: ""Something I currently do or want to do with R""
+
+This is a very informal opportunity for anyone who wants to share something they are excited about or just wants to get more comfortable talking in front of others in a friendly space. You don't have to have slides or anything fancy! Sign up here (Lightning Talks Sign Up (https://docs.google.com/spreadsheets/d/1QlkvslwBA0HQCgv6rcsLCRQUChzNhU7EiUqUCKlxrfU/edit?usp=sharing)) or message Augustina or Deeksha!
+
+7:30 - Wrap up!
+
+Many thanks to Chester Ismay and WeWork for hosting our first Meetup!
+
+Also thanks to IBM for sponsoring the food!",4217905,226696098,Augustina Ragwitz,Deeksha Thati,,,267302483,267751765,https://secure.meetupstatic.com/photos/member/9/b/3/highres_267302483.jpeg,https://secure.meetupstatic.com/photos/member/7/c/1/5/highres_267751765.jpeg,https://secure.meetupstatic.com/photos/member/9/b/3/member_267302483.jpeg,https://secure.meetupstatic.com/photos/member/7/c/1/5/member_267751765.jpeg,https://secure.meetupstatic.com/photos/member/9/b/3/thumb_267302483.jpeg,https://secure.meetupstatic.com/photos/member/7/c/1/5/thumb_267751765.jpeg,member,member,https://secure.meetupstatic.com,https://secure.meetupstatic.com,24206863,Custom House/WeWork,45.5248260498047,-122.678497314453,FALSE,222 NW 8th Avenue,Portland,us,USA,,OR,1500532418000,R-Ladies PDX,25057217,open,45.5,-122.690002441406,R-Ladies-PDX,R-ladies,"Portland, OR",en_US

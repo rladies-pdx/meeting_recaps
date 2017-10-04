@@ -1,0 +1,264 @@
+---
+title: "R-Ladies PDX September 2017 Meetup Re-cap"
+author: "Augustina Ragwitz"
+date: "September 29, 2017"
+output: html_document
+params:
+  event_url: "https://api.meetup.com/R-Ladies-PDX/events/243372843?photo-host=public&sig_id=4217905&fields=event_hosts%2C+plain_text_description&sig=255ec3306e188ba0537c5ae15317607f9d907acf"
+  rsvped_url: "https://api.meetup.com/R-Ladies-PDX/events/243372843/attendance?photo-host=public&page=20&sig_id=4217905&filter=yes&sig=260b142c4c48bec3bf81c0ae70adb888c688b1a5"
+  attended_url: "https://api.meetup.com/R-Ladies-PDX/events/243372843/attendance?photo-host=public&page=20&sig_id=4217905&filter=attended&sig=6220ff936475e0712e0ecfca17a2e8bcb4c62d9b"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r includes, message=FALSE}
+
+library(dplyr)
+library(ggplot2)
+library(httr)
+library(jsonlite)
+library(scales)
+library(tidyverse)
+```
+
+
+Thanks to everyone who made it out for our inaugural meetup!
+
+# Metrics
+
+```{r meetup_api, eval=FALSE}
+# fetch and anonymize data
+get_meetup_info <- function (url) {
+  resp <- GET(url)
+  print(paste(resp$url))
+  json <- content(resp, as = "text")
+  meetup_resp <- fromJSON(json, flatten=TRUE) # doesn't work for some reason
+  return(meetup_resp)
+}
+
+fix_meetup_json <- function(meetup_resp) {
+
+  unflattened_df <- meetup_resp %>% 
+    keep(~ class(.x) == "data.frame")
+  
+  unflattened_lists <- meetup_resp %>% 
+    keep(~ class(.x) == "list") %>% 
+    map(~ as_data_frame(.x))
+  
+  unflattened <- append(unflattened_df, unflattened_lists)
+  
+  meetup_datas <- meetup_resp
+  meetup_datas[which(names(meetup_datas) %in% names(unflattened))] <- NULL
+  meetup_datas <- as_tibble(meetup_datas)
+  
+  flattened <- unflattened %>%
+    unlist() %>% 
+    as.data.frame.list()
+  
+  meetup_datas <- bind_cols(meetup_datas, flattened)
+  
+  return(meetup_datas)
+}
+
+event <- params$event_url %>% get_meetup_info %>% fix_meetup_json
+rsvped <- params$rsvped_url %>% get_meetup_info %>% fix_meetup_json
+attended <- params$attended_url %>% get_meetup_info %>% fix_meetup_json
+
+attendance <- bind_rows(attended, rsvped %>% anti_join(attended, by = c("member.id", "member.name")))
+
+attendance_anon <- attendance
+attendance_anon$member.name = replicate(nrow(attendance_anon), 
+                                        paste(sample(LETTERS, 10, replace=TRUE), collapse=""))
+
+rm(rsvped, attended, attendance)
+write_csv(attendance_anon, "28_attendance_anon.csv")
+write_csv(event, "28_event.csv")
+```
+
+## Attendance
+
+9 out of the 10 folks who RSVP'ed attended. We had one extra person attend who did not RSVP!
+
+```{r rsvps}
+attendance_anon <- read_csv("28_attendance_anon.csv")
+ggplot(attendance_anon, aes(x=status, fill=rsvp.response)) +
+  geom_bar(position="dodge") +
+  scale_y_continuous(breaks=pretty_breaks())
+
+```
+
+# Things We Covered
+
+## R Experience and Current Use
+
+Everyone went around and shared their current level of experience with R and how they currently use it. These responses were distilled down to the following common themes.
+
+```{r demographics}
+# works_for
+# com = industry/for-profit
+# edu = university affiliation (student or teacher)
+# org = non-profit
+# gov = government
+
+survey <- read_csv('
+my,TRUE,expert,TRUE,com
+jen,TRUE,expert,TRUE,edu
+me,TRUE,expert,TRUE,edu
+je,FALSE,novice,TRUE,edu
+deb,NA,novice,TRUE,NA
+ad,TRUE,competent practitioner,TRUE,gov
+so,TRUE,competent practitioner,NA,com
+de,FALSE,competent practitioner,TRUE,org
+au,TRUE,competent practitioner,NA,com
+ch,TRUE,expert,TRUE,com
+', col_names=c("name","uses_for_work", "experience", "used_in_grad_school", "works_for"))
+
+other_tools <- read_csv('
+my,python
+jen,sas
+je,stata
+so,sql
+de,spss
+au,python
+', col_names=c("name","other_tools"))
+
+ggplot(survey, aes(x=uses_for_work, fill=works_for)) +
+  geom_bar(position="dodge")
+
+ggplot(survey, aes(x=experience, fill=used_in_grad_school)) +
+  geom_bar(position="dodge")
+
+ggplot(other_tools, aes(x=other_tools, fill=other_tools)) +
+  geom_bar(position="dodge", show.legend=FALSE) +
+  scale_y_continuous(breaks=c(1:5))
+
+```
+
+## R-Ladies PDX Group Goals
+
+The following items were suggested when folks were asked what they wanted to get out of R-Ladies PDX:
+
+* Social/Community - Meet other women in science/tech/data science
+* Mentoring
+* Learn R Programming
+* Improve Coding Skills and Keep R skills sharp
+
+## R-Ladies PDX Meetup Ideas
+
+### Study Group
+
+* R For Data Science (http://r4ds.had.co.nz/)
+* Fast AI (http://course.fast.ai/)
+* Datacamp Online Courses (https://www.datacamp.com/courses/tech:r)
+* Software Carpentry Courses (https://software-carpentry.org/lessons/)
+* Data Carpentry Courses (http://www.datacarpentry.org/lessons/)
+* Project sharing/pairing
+
+### Meetup Topics
+
+* R markdown and publishing analysis results
+* Machine Learning Workshop
+
+Got ideas? Add them here:
+https://docs.google.com/spreadsheets/d/1RzimpU5sBIu2N3N6on-Yj9OF1p1ATKUy23_OoxzqPnc/edit?usp=sharing
+
+### Group Projects
+
+* Find an interesting dataset and work together to explore it
+* Make our own "Anti-kaggle" challenge, explicitly based on cooperation
+* Pick a methodology and apply it to a public dataset to see how it works
+
+### Expertise
+
+Some members indicated they had expertise in additional areas and would be willing to mentor others.
+
+* Myffy - Data Science Career Counseling and Development
+* Augustina - Open Source community involvement
+
+## Follow Up Items
+
+### Datacamp R-Ladies PDX Group
+
+Chester indicated we could create an R-Ladies PDX group through Datacamp. Would people be interested in this?
+
+### Slack channel
+
+Slack is a chat client that can run in the browser or through an app on your phone or computer. We use the PDX Data Slack. To set up an account, use the Google from on this page to send yourself an invite. http://pdxdata.org/slack/
+
+R-Ladies PDX can be found in the channel #rladiespdx.
+
+### Survey
+
+Deeksha put together a survey to get ideas about meeting times and locations that work best for everyone.
+
+https://goo.gl/forms/FriUWABYeIYAkL343
+
+### Software/Data Carpentry Instructor Training
+
+Augustina is currently in the process of getting certified as a Carpentries Instructor. If anyone else is interested in learning more about this so we can put on some workshops, here's the info: https://docs.google.com/forms/d/e/1FAIpQLSe5rbZDqNdLIuIEw9wNrXWsGexKaSS7vwkc0HaxdBGh5M7ZPQ/viewform
+
+### R-Ladies Global
+
+R-Ladies Global has a number of committees and projects. If you are interested in getting involved, get in touch with Augustina!
+
+### R-Ladies PDX Webpage
+
+Alison Hill was kind enough to make a webpage for us through her blogdown tutorial at R meetup (https://www.meetup.com/portland-r-user-group/events/242600475/).
+Augustina is working on getting the source into the PDX R-Ladies Github org so any of us can update it. 
+
+R-Ladies PDX: http://rladies-pdx.rbind.io/
+
+One idea mentioned during our Meetup was creating a "Resources" section with links and info on where to learn R. Once we have a workflow set up through the R-Ladies PDX Github organization I will ask who would be interested in doing or assisting with this! We could even do it as a workshop and have everyone add a resource to the page!
+
+## Possible Meeting Spaces
+
+We are looking for regular meeting spaces! Several involved folks have ties to OHSU and booking space at the OHSU Waterfront would be very easy and centrally located. We also have ties to Reed and while the location isn't quite as convenient for weekdays, this could be a good resource for weekend workshops or study groups. If you have other ideas, please add them to the spreadsheet linked below!
+
+Suggested Meeting Locations:
+
+* OHSU Waterfront
+* Reed
+
+Add more here:
+https://docs.google.com/spreadsheets/d/1AYA5t2PNOsrzTHDVeWzdyNQCN9W2IPx27QqHW92s7Ho/edit?usp=sharing
+
+## Resources and R Packages Mentioned
+
+During the Meetup people shared different tools and R packages they'd worked with and also ones we explored while solving the challenge question. These were the packages that were mentioned and links to where you can find out more about them.
+
+* Open Knowledge Maps - https://openknowledgemaps.org/
+* igraph/visNetwork - https://rpubs.com/mfwade/Network-Detection-Network-Visualization
+* expand.grid - https://www.rdocumentation.org/packages/base/versions/3.4.1/topics/expand.grid
+
+# Next Meetup
+
+Our next meetup on Oct 16 will feature Julia Silge presenting a short tutorial from her book "Tidy Text". Would anyone be interested in a casual meetup on another day beforehand to prepare for the tutorial?
+
+https://www.meetup.com/R-Ladies-PDX/events/243376514/
+
+We are also planning our November meetup! We will share a Doodle poll with the group once we have survey responses in and depending on venue availability. Due to the Thanksgiving holiday, it will most likely be either during the week of Nov 13 or the week of Nov 27.
+
+# Challenge Question
+
+At the end of the Meetup, Myffy proposed a question she'd encountered in a job interview and we all experimented with different ways to answer it.
+
+Here is the question:
+
+How would you build a data structure containing all possible permutations of ATCG?
+
+The solution we came up with:
+
+```{r challenge_question}
+
+atcg <- c("A", "T", "C", "G")
+atcg_permutations <- expand.grid(atcg, atcg, atcg, atcg)
+
+atcg_permutations
+
+```
+
+This was a really fun activity and I'm thinking it might be fun to come up with fun problems like this at the end of each Meetup. I am starting yet another spreadsheet to collect questions (you can post a link to an R notebook or Gist with R code if need be) which we can randomly choose from.
+
+https://docs.google.com/spreadsheets/d/19HU-icl6P0rAObs8G_BX5BDQ5_5cPjzj8Fek6V3ZA4E/edit?usp=sharing
