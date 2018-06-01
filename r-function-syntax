@@ -1,0 +1,7 @@
+## Mary Anne's guide towards functional functions
+
+Start with the basic syntax:  
+> f <- function(x){x+1}  
+where you're assigning a function to object _f_ with variable _x_.  
+> f(2)  
+The answer would be 3.  
